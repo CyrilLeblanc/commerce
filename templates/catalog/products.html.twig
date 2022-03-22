@@ -1,0 +1,18 @@
+{#
+	PRODUCT[]	products
+#}
+{% for product in products %}
+	<div class="product">
+		<a href="{{ path('product', {idProduct: product.id}) }}">
+			<h3>{{ product.name }}</h3>
+		</a>
+		<p>{{ product.detail }}</p>
+		<p>{{ product.price }}</p>
+		{% for category in product.category %}
+			<a href="/category/{{category.id}}">{{ category.name }}</a>
+		{% endfor %}
+	</div>
+	<hr>
+{% else %}
+	<p>No products found</p>
+{% endfor %}

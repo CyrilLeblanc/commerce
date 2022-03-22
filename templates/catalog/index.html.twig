@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalog
+{% endblock %}
+
+{% block body %}
+	{% include "catalog/products.html.twig" with {
+        'products': products
+    }%}
+	{% include "catalog/pagination.html.twig" with 
+    {
+        'enabled': products|length > 0,
+        'total_pages': total_pages,
+        'current_page': current_page
+    } %}
+{% endblock %}

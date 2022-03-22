@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{product.name}}</h1>
+    <h2>{{product.price}}€</h2>
+    <p>{{product.detail}}</p>
+    <form action="{{path('cart_add')}}" method="POST">
+        <label for="quantity">Quantity :</label>
+        <input type="number" name="quantity" id="quantity" value="1">
+        <input type="hidden" name="id" value="{{product.id}}">
+        <input type="submit" value="Add to cart">
+    </form>
+{% endblock %}

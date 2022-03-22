@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using
+		    Symfony UX #}
+		{% block stylesheets %}{% endblock %}
+		{% block javascripts
+    %}{% endblock %}
+	</head>
+	<body>
+		{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+			<a href="{{ logout_path() }}">Logout</a>
+		{% else %}
+			<a href="{{ path('login') }}">Login</a>
+			<a href="{{ path('register') }}">Register</a>
+		{% endif %}
+		<header>
+			<ul>
+				<li><a href="{{ path('index') }}">Catalog</a></li>
+				<li><a href="{{ path('category_list') }}">Categories</a></li>
+				<li><a href="{{ path('cart') }}">Cart</a></li>
+			</ul>
+		</header>
+		{% block body %}{% endblock %}
+	</body>
+</html>

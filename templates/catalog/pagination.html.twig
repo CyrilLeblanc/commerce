@@ -1,0 +1,14 @@
+{#
+    BOOL    enabled
+    INT     total_pages
+    INT     current_page
+#}
+{% if (enabled) %}
+	<div class="pagination">
+		<div class="pagination">
+			{% for page in 1..(total_pages + 1) %}
+				<a href="{{ path('catalog') }}?page={{ page }}" {% if current_page == page %} class="current" {% endif %}>{{ page }}</a>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}
