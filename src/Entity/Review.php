@@ -14,17 +14,17 @@ class Review
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $Title;
+    private $title;
 
     #[ORM\Column(type: 'string', length: 1024)]
-    private $Content;
+    private $content;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
-    private $Rate;
+    private $rate;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private $User;
+    private $user;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
@@ -37,48 +37,48 @@ class Review
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
-    public function setTitle(?string $Title): self
+    public function setTitle(?string $title): self
     {
-        $this->Title = $Title;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getContent(): ?string
     {
-        return $this->Content;
+        return $this->content;
     }
 
-    public function setContent(string $Content): self
+    public function setContent(string $content): self
     {
-        $this->Content = $Content;
+        $this->content = $content;
 
         return $this;
     }
 
     public function getRate(): ?int
     {
-        return $this->Rate;
+        return $this->rate;
     }
 
-    public function setRate(?int $Rate): self
+    public function setRate(?int $rate): self
     {
-        $this->Rate = $Rate;
+        $this->rate = $rate;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?user
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): self
+    public function setUser(?user $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }

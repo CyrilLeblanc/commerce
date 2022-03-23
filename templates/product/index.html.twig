@@ -6,12 +6,28 @@
 
 {% block body %}
 	<h1>{{product.name}}</h1>
-    <h2>{{product.price}}€</h2>
-    <p>{{product.detail}}</p>
-    <form action="{{path('cart_add')}}" method="POST">
-        <label for="quantity">Quantity :</label>
-        <input type="number" name="quantity" id="quantity" value="1">
-        <input type="hidden" name="id" value="{{product.id}}">
-        <input type="submit" value="Add to cart">
-    </form>
+	<h2>{{product.price}}€</h2>
+	<p>{{product.detail}}</p>
+	<form action="{{path('cart_add')}}" method="POST">
+		<label for="quantity">Quantity :</label>
+		<input type="number" name="quantity" id="quantity" value="1">
+		<input type="hidden" name="id" value="{{product.id}}">
+		<input type="submit" value="Add to cart">
+	</form>
+	<br><br><br>
+	{{ form_start(review_form) }}
+	<input type="hidden" value="{{product.id}}" name="idProduct">
+	{{ form_widget(review_form) }}
+	<input type="submit" value="Submit">
+	{{ form_end(review_form) }}
+	<div class="reviews">
+		{% for review in reviews %}
+			<div class="review">
+				<h3>{{review.title}}</h3>
+				<p>Note: {{review.rate}}/5</p>
+				<small>{{review.user.username}}</small>
+				<p>{{review.content}}</p>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}
