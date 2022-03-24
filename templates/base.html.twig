@@ -23,6 +23,12 @@
 				<li><a href="{{ path('index') }}">Catalog</a></li>
 				<li><a href="{{ path('category_list') }}">Categories</a></li>
 				<li><a href="{{ path('cart') }}">Cart</a></li>
+				{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+					<li><a href="{{ path('order') }}">Orders</a></li>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<li><a href="{{path('admin_order')}}">Admin</a></li>
+				{% endif %}
 			</ul>
 		</header>
 		{% block body %}{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Orders
+{% endblock %}
+
+{% block body %}
+
+	<h1>Orders</h1>
+
+	{% for order in orders %}
+		<ul>
+			<li>Order #{{order.id}}</li>
+			<li>Order date:
+				{{order.createdAt|date('d/m/Y H:m:s')}}</li>
+			<li>Order status:
+				{{order.status}}
+				{% if order.getStatus == 'paid' %}
+					<a href="{{path('admin_order_ship', {idOrder: order.id})}}">Ship</a>
+				{% endif %}
+			</li>
+            <li>Products:
+                <ul>
+                    {% for productOrder in order.getProductOrders %}
+                        <li>{{productOrder.product.name}}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+		</ul>
+	{% endfor %}
+
+{% endblock %}
