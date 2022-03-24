@@ -8,6 +8,10 @@
 	<h1>{{product.name}}</h1>
 	<h2>{{product.price}}€</h2>
 	<p>{{product.detail}}</p>
+	{% if average_rate != null %}
+		<h3>Average rate {{average_rate}} / 5</h3>
+	{% endif %}
+	
 	<form action="{{path('cart_add')}}" method="POST">
 		<label for="quantity">Quantity :</label>
 		<input type="number" name="quantity" id="quantity" value="1">
@@ -15,11 +19,15 @@
 		<input type="submit" value="Add to cart">
 	</form>
 	<br><br><br>
-	{{ form_start(review_form) }}
-	<input type="hidden" value="{{product.id}}" name="idProduct">
-	{{ form_widget(review_form) }}
-	<input type="submit" value="Submit">
-	{{ form_end(review_form) }}
+	
+	{% if display_review_form %}
+		{{ form_start(review_form) }}
+		<input type="hidden" value="{{product.id}}" name="idProduct">
+		{{ form_widget(review_form) }}
+		<input type="submit" value="Submit">
+		{{ form_end(review_form) }}
+	{% endif %}
+
 	<div class="reviews">
 		{% for review in reviews %}
 			<div class="review">
