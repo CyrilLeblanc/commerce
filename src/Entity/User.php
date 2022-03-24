@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
     private $orders;
 
+    #[ORM\OneToOne(inversedBy: 'user', targetEntity: Card::class, cascade: ['persist', 'remove'])]
+    private $card;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -197,6 +200,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): self
+    {
+        $this->card = $card;
 
         return $this;
     }

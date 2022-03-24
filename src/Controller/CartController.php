@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Card;
 use App\Form\CheckoutType;
+use App\Repository\CardRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,11 +48,37 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/checkout', name: 'cart_checkout')]
-    public function checkout(Request $request, ProductRepository $productRepository): Response
+    public function checkout(Request $request, ProductRepository $productRepository, CardRepository $cardRepository, ): Response
     {
         $card = new \App\Dto\Card();
         $form = $this->createForm(CheckoutType::class, $card);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($card->getYear() < date('Y') || $card->getYear() > date('Y') + 10) {
+                $form->get('year')->addError(new \Symfony\Component\Form\FormError('Invalid year'));
+            } else {
+                if ($card->getMonth() < date('m')) {
+                    $form->get('month')->addError(new \Symfony\Component\Form\FormError('Invalid month'));
+                }
+            }
+            if ($form->isValid()) {
+
+                // save card
+                $cardEntity = new Card();
+                $cardEntity->setDate(sprintf("%d/%d", $card->getMonth(), $card->getYear()))
+                    ->setNumber(substr($card->getNumber(), -4))
+                    ->setUser($this->getUser());
+                $cardRepository->add($cardEntity);
+
+                // create product orders
+                $cart = $request->getSession()->get('cart', []);
+                foreach($cart as $idProduct => $quantity) {
+                    // TODO
+                }
+                return $this->redirectToRoute('cart_checkout_valid');
+            }
+        }
 
 
         $cart = $request->getSession()->get('cart', []);
@@ -61,7 +89,14 @@ class CartController extends AbstractController
         return $this->render('cart/checkout.html.twig', [
             'cart' => $cart,
             'products' => $products,
-            'form_checkout' => $this->createForm(CheckoutType::class)->createView(),
+            'form_checkout' => $form->createView(),
         ]);
+    }
+
+
+    #[Route('/cart/checkout/valid', name: 'cart_checkout_valid')]
+    public function checkoutResume(Request $request): Response
+    {
+        die;
     }
 }

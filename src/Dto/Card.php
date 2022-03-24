@@ -10,8 +10,11 @@ class Card {
     private int $number;
 
     #[Assert\NotBlank]
-    #[Assert\Date]
-    private string $date;
+    private int $year;
+
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 1, max: 12)]
+    private int $month;
 
     #[Assert\NotBlank]
     #[Assert\Range(min: 0, max: 999)]
@@ -28,18 +31,6 @@ class Card {
     public function setNumber(int $number): self
     {
         $this->number = $number;
-
-        return $this;
-    }
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
@@ -64,6 +55,30 @@ class Card {
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): self
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    public function getMonth(): ?int
+    {
+        return $this->month;
+    }
+
+    public function setMonth(int $month): self
+    {
+        $this->month = $month;
 
         return $this;
     }

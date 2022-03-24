@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,28 +17,27 @@ class CheckoutType extends AbstractType
     {
         $builder
             ->add('number', NumberType::class, [
-                'label' => 'Numéro de carte',
+                'label' => 'Card number',
+            ])
+            ->add('year', IntegerType::class, [
+                'label' => 'Year',
                 'attr' => [
-                    'placeholder' => 'Numéro de carte',
+                    'min' => date('Y'),
+                    'max' => date('Y') + 10,
                 ],
             ])
-            ->add('date', DateType::class, [
-                'label' => 'Date d\'expiration',
+            ->add('month', IntegerType::class, [
+                'label' => 'Month',
                 'attr' => [
-                    'placeholder' => 'Date d\'expiration',
-                ],
+                    'min' => 1,
+                    'max' => 12,
+                ]
             ])
             ->add('cvv', NumberType::class, [
-                'label' => 'Code de sécurité',
-                'attr' => [
-                    'placeholder' => 'Code de sécurité',
-                ],
+                'label' => 'Cryptogram',
             ])
             ->add('name', TextType::class, [
-                'label' => 'Nom du titulaire',
-                'attr' => [
-                    'placeholder' => 'Nom du titulaire',
-                ],
+                'label' => 'Name',
             ])
         ;
     }
