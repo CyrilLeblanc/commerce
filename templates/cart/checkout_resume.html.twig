@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resume
+{% endblock %}
+
+{% block body %}
+	<h1>Order resume</h1>
+	<h2>Cart</h2>
+	{% include 'cart/resume.html.twig'%}
+	<h2>Payment</h2>
+	<ul>
+		<li>Number:
+			**** **** **** {{ order.card.number }}</li>
+		<li>Expiration:
+			{{ order.card.date }}</li>
+		<li>Cvv:
+			{{ order.card.cvv }}</li>
+	</ul>
+
+    <a href="{{path('cart_checkout_validate', {'idOrder': order.id})}}">Pay</a>
+{% endblock %}

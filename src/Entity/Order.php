@@ -22,6 +22,7 @@ class Order
     #[ORM\Column(type: 'string', length: 255)]
     private $status;
 
+    const STATUS_NEW = 'new';
     const STATUS_PAID = 'paid';
     const STATUS_TRANSIT = 'transit';
     const STATUS_DELIVERED = 'delivered';
@@ -34,6 +35,10 @@ class Order
 
     #[ORM\OneToMany(mappedBy: 'customerOrder', targetEntity: ProductOrder::class)]
     private $productOrders;
+
+    #[ORM\ManyToOne(targetEntity: Card::class, inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $card;
 
     public function __construct()
     {
@@ -119,6 +124,18 @@ class Order
                 $productOrder->setCustomerOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): self
+    {
+        $this->card = $card;
 
         return $this;
     }
