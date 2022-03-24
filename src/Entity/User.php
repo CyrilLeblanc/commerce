@@ -110,7 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return explode($this->roles, ',');
+        return explode(',', $this->roles);
     }
 
     public function setRoles(array $roles): self

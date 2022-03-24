@@ -1,0 +1,28 @@
+<ul>
+	{% set total = 0 %}
+	{% for product in products %}
+		<li>
+			<h2>{{ product.name }}</h2>
+			<ul>
+				<li>quantity:
+					{{ product.quantity }}</li>
+				<li>
+					price:
+					{{ product.price }}
+				</li>
+				<li>
+					total:
+					{{ product.quantity * product.price }}
+					{% set total = total + (product.quantity * product.price) %}
+				</li>
+			</ul>
+			<form action="{{path('cart_remove')}}" method="POST">
+				<input type="hidden" name="id" value="{{ product.id }}">
+				<input type="submit" value="Remove">
+			</form>
+		</li>
+	{% else %}
+		No products in cart
+	{% endfor %}
+	<h3>Total: {{total}}€</h3>
+</ul>

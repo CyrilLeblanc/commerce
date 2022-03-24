@@ -22,6 +22,13 @@ class Order
     #[ORM\Column(type: 'string', length: 255)]
     private $status;
 
+    const STATUS_NEW = 'new';
+    const STATUS_PAID = 'paid';
+    const STATUS_TRANSIT = 'transit';
+    const STATUS_DELIVERED = 'delivered';
+    const STATUS_RETURNED = 'returned';
+    const STATUS_CANCELED = 'canceled';
+
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 

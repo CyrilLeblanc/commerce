@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart
+{% endblock %}
+
+{% block body %}
+<h1>Checkout</h1>
+{% include "cart/resume.html.twig" %}
+{{ form_start(form_checkout)}}
+{{ form_widget(form_checkout)}}
+<button type="submit">Confirm</button>
+{{ form_end(form_checkout)}}
+{% endblock %}

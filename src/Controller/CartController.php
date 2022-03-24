@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Form\CheckoutType;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
@@ -42,5 +43,25 @@ class CartController extends AbstractController
         unset($cart[$request->request->getInt('id')]);
         $session->set('cart', $cart);
         return $this->redirectToRoute('cart');
+    }
+
+    #[Route('/cart/checkout', name: 'cart_checkout')]
+    public function checkout(Request $request, ProductRepository $productRepository): Response
+    {
+        $card = new \App\Dto\Card();
+        $form = $this->createForm(CheckoutType::class, $card);
+        $form->handleRequest($request);
+
+
+        $cart = $request->getSession()->get('cart', []);
+        foreach ($cart as $idProduct => $quantity) {
+            $products[] = $productRepository->find($idProduct)->setQuantity($quantity);
+        }
+
+        return $this->render('cart/checkout.html.twig', [
+            'cart' => $cart,
+            'products' => $products,
+            'form_checkout' => $this->createForm(CheckoutType::class)->createView(),
+        ]);
     }
 }
